@@ -467,7 +467,7 @@ export class GridController<T> extends GridChangeNotifier {
   // -- Read-only view of the state -----------------------------------------
 
   get columns(): readonly GridColumn<T>[] {
-    return this.columnList;
+    return [...this.columnList];
   }
 
   /**
@@ -523,15 +523,15 @@ export class GridController<T> extends GridChangeNotifier {
   }
 
   get sorts(): readonly SortSpec[] {
-    return this.sortList;
+    return [...this.sortList];
   }
 
   get groups(): readonly GroupSpec[] {
-    return this.groupList;
+    return [...this.groupList];
   }
 
   get aggregations(): readonly Aggregation[] {
-    return this.aggregationList;
+    return [...this.aggregationList];
   }
 
   get filter(): Filter | null {
@@ -1839,7 +1839,7 @@ export class GridController<T> extends GridChangeNotifier {
    * outermost first.
    */
   get stackedHeaders(): readonly HeaderRow[] {
-    return this.stackedHeaderRows;
+    return [...this.stackedHeaderRows];
   }
 
   set stackedHeaders(rows: readonly HeaderRow[]) {
