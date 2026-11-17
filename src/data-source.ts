@@ -514,9 +514,15 @@ export class InMemoryDataSource<T> extends GridDataSource<T> {
     this.data = [...rows];
   }
 
-  /** The current, unprocessed rows. */
+  /**
+   * A snapshot of the current, unprocessed rows.
+   *
+   * A copy, so that a caller cannot mutate the source behind its own back and
+   * leave every memoised stage describing rows that are no longer there. Use
+   * the mutators, or {@link localRows} when a live view is what you want.
+   */
   get rows(): readonly T[] {
-    return this.data;
+    return [...this.data];
   }
 
   override get localRows(): readonly T[] {
