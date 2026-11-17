@@ -16,6 +16,12 @@
   <img alt="729 tests" src="https://img.shields.io/badge/tests-729-success.svg"/>
 </p>
 
+<p align="center">
+  <b><a href="https://dhairya-007.github.io/datagrid-core/">Live demo</a></b> ·
+  <a href="https://www.npmjs.com/package/datagrid-core">npm</a> ·
+  <a href="demo/">the demo's source</a>
+</p>
+
 ---
 
 Every serious data grid for the web ships its own renderer, and most ship a
@@ -86,6 +92,31 @@ npm install datagrid-core
 Ships ESM and CJS, with types. **No runtime dependencies**, and nothing that
 touches the DOM — it runs in a browser, in Node, in a worker, or on the
 server.
+
+## See it running
+
+**<https://dhairya-007.github.io/datagrid-core/>**
+
+A React application with no grid dependency but this one, in
+[`demo/`](demo/) — about 1,200 lines, which is the honest answer to "what do I
+have to write myself?". Three grids share one renderer:
+
+- **In memory** — up to 100,000 generated rows with multi-column sorting, a
+  filter row with per-type operators and value lists, grouping with subtotals,
+  frozen columns and rows, stacked headers, range selection, inline editing with
+  validation and undo, detail panels, conditional formatting, paging, CSV export
+  and saved views.
+- **Server-backed** — the same grid against a fake backend with adjustable
+  latency, showing the debounce on a typed word, the cancellation of superseded
+  fetches, server-side paging and infinite scrolling, and optimistic writes that
+  roll back when the write fails.
+- **Tree rows** — a flat list with a parent reference, nested by the engine,
+  with roll-ups and lazily kept branches.
+
+A panel beside the grid prints what the engine is actually saying: the
+`GridQuery` a data source would receive, the change sets the controller emits,
+and the JSON a saved view serialises to. The demo installs the package from
+npm, so the deploy that publishes it also checks the published package.
 
 ## What you get
 
@@ -261,6 +292,16 @@ const objects plus a union type so `'start'` and `ColumnPin.start` both work,
 `FetchSignal` wraps an `AbortController`, and anything keyed by a value uses a
 tagged string key — because a JavaScript `Map` compares object keys by
 identity, which otherwise put every row of a date column in its own group.
+
+## Support
+
+The engine, the Flutter grid it came from and the demo are all MIT, built in the
+open and free to use. If they saved you a week of work and you would like to say
+thank you:
+
+**UPI — `ozadhairya73@oksbi`**
+
+A star on the repository is just as welcome.
 
 ## Licence
 
