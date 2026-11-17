@@ -1,4 +1,4 @@
-<h1 align="center">gridcore</h1>
+<h1 align="center">datagrid-core</h1>
 
 <p align="center">
   <em>A headless data grid engine for TypeScript and JavaScript.<br/>
@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  <a href="https://www.npmjs.com/package/gridcore"><img alt="npm" src="https://img.shields.io/npm/v/gridcore.svg?color=cb3837"/></a>
+  <a href="https://www.npmjs.com/package/datagrid-core"><img alt="npm" src="https://img.shields.io/npm/v/datagrid-core.svg?color=cb3837"/></a>
   <a href="LICENSE"><img alt="MIT" src="https://img.shields.io/badge/licence-MIT-blue.svg"/></a>
   <img alt="TypeScript" src="https://img.shields.io/badge/TypeScript-5.7-3178c6.svg"/>
   <img alt="dependencies: none" src="https://img.shields.io/badge/dependencies-none-success.svg"/>
@@ -19,7 +19,7 @@
 ---
 
 Every serious data grid for the web ships its own renderer, and most ship a
-licence key with it. `gridcore` is the other half of the problem: the
+licence key with it. `datagrid-core` is the other half of the problem: the
 **engine**, with no renderer at all. You keep your own markup, your own
 framework, your own design system — React, Vue, Svelte, Solid, Lit, or a
 `<table>` you wrote by hand — and the engine answers the questions that are
@@ -33,7 +33,7 @@ import {
   InMemoryDataSource,
   isDataRow,
   numberRange,
-} from 'gridcore';
+} from 'datagrid-core';
 
 const grid = new GridController<Employee>({
   columns: [
@@ -80,7 +80,7 @@ run in CI so it cannot drift from the API.
 ## Install
 
 ```sh
-npm install gridcore
+npm install datagrid-core
 ```
 
 Ships ESM and CJS, with types. **No runtime dependencies**, and nothing that
@@ -191,12 +191,12 @@ backend can translate it into SQL or query parameters.
 ## Two entry points
 
 ```ts
-import { GridController } from 'gridcore'; // what an application holds
-import { sortRows, buildGroups } from 'gridcore/advanced'; // the pipeline stages
+import { GridController } from 'datagrid-core'; // what an application holds
+import { sortRows, buildGroups } from 'datagrid-core/advanced'; // the pipeline stages
 ```
 
 The root is a promise: everything in it is something you can hold, and taking
-it back is a breaking change. `gridcore/advanced` adds the stages the
+it back is a breaking change. `datagrid-core/advanced` adds the stages the
 controller drives — the sorter, the grouper, the aggregator, the flatteners —
 for when you are writing a data source of your own or an adapter for another
 framework.
@@ -250,7 +250,7 @@ Two of the rules those exist to protect:
 
 ## A note on where this came from
 
-`gridcore` is a TypeScript port of
+`datagrid-core` is a TypeScript port of
 [`lattice_core`](https://github.com/Dhairya-007/lattice), the pure-Dart engine
 behind the Lattice data grid for Flutter. The engine was kept separate from
 the widgets precisely so it could grow past one toolkit; this is that.

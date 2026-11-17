@@ -8,7 +8,7 @@ this machine; the only step left needs your npm credentials.
 ```sh
 npm login            # a browser sign-in; only you can do this
 npm run verify       # typecheck, lint, format, 729 tests, build
-npm publish          # the name `gridcore` was unclaimed as of 2026-11-17
+npm publish          # the name `datagrid-core` was unclaimed as of 2026-11-17
 ```
 
 `npm publish` runs the build again through `prepublishOnly`, so what goes up
@@ -34,7 +34,7 @@ publishes with provenance.
   and its CSV export.
 - The built package installed into a scratch project and was consumed
   through **both** `import` and `require`, from both entry points
-  (`gridcore` and `gridcore/advanced`).
+  (`datagrid-core` and `datagrid-core/advanced`).
 - A consumer typechecked against the published types under `NodeNext`
   resolution, including that `isDataRow(row)` narrows back to the row type.
 - `npm pack --dry-run`: 18 files, 833 kB packed. Only `dist`, the readme,
@@ -42,7 +42,7 @@ publishes with provenance.
 
 ## Before or just after the first publish
 
-- **Create the GitHub repository** `Dhairya-007/gridcore` and push, or the
+- **Create the GitHub repository** `Dhairya-007/datagrid-core` and push, or the
   `repository` and `homepage` links on the npm page will 404. The remote is
   not configured here on purpose.
 - The npm page renders `README.md`, so that is the shop window.

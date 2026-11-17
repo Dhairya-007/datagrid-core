@@ -7,7 +7,7 @@ reporting on this repository, rather than in a public issue.
 
 ## What this package does, and does not do
 
-`gridcore` is pure computation. It has no runtime dependencies, reads no
+`datagrid-core` is pure computation. It has no runtime dependencies, reads no
 network, no filesystem and no environment variables, and touches no DOM or
 browser API. That is deliberate, and a pull request that changes it will be
 declined: the small surface is what makes auditing it tractable.

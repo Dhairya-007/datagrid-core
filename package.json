@@ -1,5 +1,5 @@
 {
-  "name": "gridcore",
+  "name": "datagrid-core",
   "version": "0.1.0",
   "description": "Headless data grid engine: multi-column sorting, filtering, search, grouping with aggregates, tree rows, virtualization, selection, cell editing and CSV export.",
   "keywords": [
@@ -16,13 +16,13 @@
   ],
   "license": "MIT",
   "author": "Dhairya Oza",
-  "homepage": "https://github.com/Dhairya-007/gridcore#readme",
+  "homepage": "https://github.com/Dhairya-007/datagrid-core#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Dhairya-007/gridcore.git"
+    "url": "git+https://github.com/Dhairya-007/datagrid-core.git"
   },
   "bugs": {
-    "url": "https://github.com/Dhairya-007/gridcore/issues"
+    "url": "https://github.com/Dhairya-007/datagrid-core/issues"
   },
   "type": "module",
   "sideEffects": false,

@@ -50,7 +50,7 @@ export function requireSupportedSchema(json: JsonMap, what: string): number {
   }
   if (version > GRID_SCHEMA_VERSION) {
     throw new GridFormatError(
-      `${what} was written by a newer version of gridcore (schema v${version}; ` +
+      `${what} was written by a newer version of datagrid-core (schema v${version}; ` +
         `this build understands up to v${GRID_SCHEMA_VERSION}).`,
     );
   }

@@ -2,7 +2,7 @@
 //
 // Anything exported is something a user can hold, and taking it back later is
 // a breaking change. The pipeline stages and the few implementation types the
-// engine hands around live in `gridcore/advanced` instead, so that the
+// engine hands around live in `datagrid-core/advanced` instead, so that the
 // surface an application sees is the surface it needs.
 import { describe, expect, it } from 'vitest';
 import * as advanced from '../src/advanced';
