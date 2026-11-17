@@ -127,7 +127,9 @@ export class GridChangeNotifier {
    * changed, which is always safe and never informative; the engine passes a
    * specific set, and so should a source that knows.
    */
-  notifyListeners(changes?: ReadonlySet<GridChange> | readonly GridChange[]): void {
+  notifyListeners(
+    changes?: ReadonlySet<GridChange> | readonly GridChange[],
+  ): void {
     if (this.disposed) return;
     const asSet =
       changes === undefined

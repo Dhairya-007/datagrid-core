@@ -15,7 +15,12 @@ import {
   operatorNeedsValueSet,
   operatorsFor,
 } from '../src/index';
-import { Product, productColumns, productGrid, sampleProducts } from './fixtures';
+import {
+  Product,
+  productColumns,
+  productGrid,
+  sampleProducts,
+} from './fixtures';
 
 const everyOperator = Object.values(FilterOperator);
 

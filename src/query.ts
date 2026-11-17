@@ -183,7 +183,8 @@ export class GridQuery {
     const json: JsonMap = {
       [GRID_SCHEMA_VERSION_KEY]: GRID_SCHEMA_VERSION,
     };
-    if (this.sorts.length > 0) json['sorts'] = this.sorts.map((s) => s.toJSON());
+    if (this.sorts.length > 0)
+      json['sorts'] = this.sorts.map((s) => s.toJSON());
     if (this.filter !== null) json['filter'] = this.filter.toJSON();
     if (this.hasSearch) json['search'] = this.search;
     if (this.searchFields.length > 0) {

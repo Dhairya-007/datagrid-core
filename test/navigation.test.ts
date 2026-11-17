@@ -128,9 +128,9 @@ describe('Tab between editable cells', () => {
     const grid = productGrid({ selectionMode: SelectionMode.cellRange });
     grid.selectCell(new CellAddress(5, 'price'));
     expect(grid.moveToNextEditableCell({ wrap: false })).toBeNull();
-    expect(
-      grid.selection.activeCell?.equals(new CellAddress(5, 'price')),
-    ).toBe(true);
+    expect(grid.selection.activeCell?.equals(new CellAddress(5, 'price'))).toBe(
+      true,
+    );
     expect(
       grid.moveToNextEditableCell()?.equals(new CellAddress(0, 'name')),
     ).toBe(true);

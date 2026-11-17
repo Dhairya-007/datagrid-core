@@ -66,7 +66,9 @@ describe('pipeline', () => {
   });
 
   it('searches case-insensitively and respects column formatters', () => {
-    expect(source().fetchSync(new GridQuery({ search: 'USD' })).rows).toHaveLength(6);
+    expect(
+      source().fetchSync(new GridQuery({ search: 'USD' })).rows,
+    ).toHaveLength(6);
     expect(
       source().fetchSync(new GridQuery({ search: 'KEYBOARD' })).rows,
     ).toHaveLength(1);
@@ -80,7 +82,9 @@ describe('pipeline', () => {
   });
 
   it('matches everything for a blank search', () => {
-    expect(source().fetchSync(new GridQuery({ search: '   ' })).rows).toHaveLength(6);
+    expect(
+      source().fetchSync(new GridQuery({ search: '   ' })).rows,
+    ).toHaveLength(6);
   });
 
   it('does not hide rows for an unfilled filter condition', () => {
@@ -106,13 +110,17 @@ describe('paging', () => {
   });
 
   it('comes back empty for a page past the end rather than throwing', () => {
-    const result = source().fetchSync(new GridQuery({ offset: 100, limit: 10 }));
+    const result = source().fetchSync(
+      new GridQuery({ offset: 100, limit: 10 }),
+    );
     expect(result.rows).toEqual([]);
     expect(result.matchedCount).toBe(6);
   });
 
   it('returns what there is for a limit longer than the data', () => {
-    expect(source().fetchSync(new GridQuery({ limit: 100 })).rows).toHaveLength(6);
+    expect(source().fetchSync(new GridQuery({ limit: 100 })).rows).toHaveLength(
+      6,
+    );
   });
 
   it('counts filtered rows, not all rows', () => {

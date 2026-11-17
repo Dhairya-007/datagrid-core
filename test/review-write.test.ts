@@ -47,7 +47,10 @@ class Backend extends GridDataSource<Product> {
     });
   }
 
-  override async commit(_original: Product, updated: Product): Promise<Product> {
+  override async commit(
+    _original: Product,
+    updated: Product,
+  ): Promise<Product> {
     const held = gate();
     this.gates.push(held);
     await held.promise;

@@ -11,7 +11,13 @@ import {
   requiredValue,
   SortSpec,
 } from '../src/index';
-import { labelsOf, Product, productColumns, productGrid, sampleProducts } from './fixtures';
+import {
+  labelsOf,
+  Product,
+  productColumns,
+  productGrid,
+  sampleProducts,
+} from './fixtures';
 
 /**
  * An immutable row, which is what makes a lost write visible: an in-place

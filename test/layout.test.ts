@@ -228,9 +228,9 @@ describe('horizontal windowing', () => {
 
   it('yields nothing for no columns or no width', () => {
     expect(
-      computeLayout<Product>([], { viewportWidth: 500 }).visibleScrollingColumns(
-        { scrollOffset: 0 },
-      ),
+      computeLayout<Product>([], {
+        viewportWidth: 500,
+      }).visibleScrollingColumns({ scrollOffset: 0 }),
     ).toEqual([]);
     expect(
       computeLayout(many, { viewportWidth: 0 }).visibleScrollingColumns({
@@ -313,9 +313,13 @@ describe('GridColumn', () => {
   it('clears a callback with an explicit null, which is the only way to', () => {
     const original = productColumnMap().get('price') as GridColumn<Product>;
     expect(original.copyWith({ setValue: null }).editable).toBe(false);
-    expect(original.copyWith({ format: null }).formattedValue(
-      new Product({ id: 1, name: 'x', category: 'y', price: 12.5 }),
-    )).toBe('12.5');
+    expect(
+      original
+        .copyWith({ format: null })
+        .formattedValue(
+          new Product({ id: 1, name: 'x', category: 'y', price: 12.5 }),
+        ),
+    ).toBe('12.5');
   });
 
   it('regenerates the default accessor when the field changes', () => {

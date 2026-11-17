@@ -92,10 +92,7 @@ export class RowMetrics {
   }
 
   /** Metrics for rows that are all the same height. */
-  static uniform(options: {
-    rowCount: number;
-    rowHeight: number;
-  }): RowMetrics {
+  static uniform(options: { rowCount: number; rowHeight: number }): RowMetrics {
     if (!(options.rowHeight > 0)) {
       throw new GridArgumentError(
         `rowHeight must be positive, got ${options.rowHeight}.`,
@@ -155,7 +152,9 @@ export class RowMetrics {
   heightOf(index: number): number {
     if (index < 0 || index >= this.rowCount) return 0;
     if (this.offsets === null) return this.rowHeight;
-    return (this.offsets[index + 1] as number) - (this.offsets[index] as number);
+    return (
+      (this.offsets[index + 1] as number) - (this.offsets[index] as number)
+    );
   }
 
   /** The row containing `offset`, clamped to the valid range. */

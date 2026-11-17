@@ -25,6 +25,10 @@ export type GridRowKind = (typeof GridRowKind)[keyof typeof GridRowKind];
  * plain index-based virtualized list: a group header and a data row are both
  * just rows at some index.
  */
+// The row type is what makes `isDataRow` narrow to `DataGridRow<T>` at a
+// call site, so it stays on the base class even though the base reads no
+// value of it.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export abstract class GridRow<T> {
   /** Which of the three kinds of row this is. */
   abstract readonly kind: GridRowKind;
@@ -837,9 +841,7 @@ export function flattenGroups<T>(
  * group" cannot be a list of the groups currently on screen — but a caller
  * that wants to act on the paths it can see still can.
  */
-export function collectGroupPaths<T>(
-  nodes: readonly GroupNode<T>[],
-): string[] {
+export function collectGroupPaths<T>(nodes: readonly GroupNode<T>[]): string[] {
   const out: string[] = [];
   const walk = (level: readonly GroupNode<T>[]): void => {
     for (const node of level) {
@@ -943,7 +945,10 @@ export class GroupedRowList<T> extends GridRowList<T> {
  * The slots are contiguous and ascending, so this is a binary search: a grid
  * grouped into thousands of groups must not walk them per read.
  */
-function slotAt<T>(level: readonly GroupSlot<T>[], index: number): GroupSlot<T> {
+function slotAt<T>(
+  level: readonly GroupSlot<T>[],
+  index: number,
+): GroupSlot<T> {
   let low = 0;
   let high = level.length - 1;
   while (low < high) {

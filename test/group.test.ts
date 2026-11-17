@@ -20,7 +20,12 @@ import {
   type CellValue,
   type GroupNode,
 } from '../src/advanced';
-import { Product, productColumnMap, productGrid, sampleProducts } from './fixtures';
+import {
+  Product,
+  productColumnMap,
+  productGrid,
+  sampleProducts,
+} from './fixtures';
 
 const columns = productColumnMap();
 
@@ -46,11 +51,7 @@ describe('buildGroups', () => {
       [new GroupSpec('category')],
       columns,
     );
-    expect(groups.map((g) => g.label)).toEqual([
-      'Compute',
-      'Display',
-      'Input',
-    ]);
+    expect(groups.map((g) => g.label)).toEqual(['Compute', 'Display', 'Input']);
     expect(groups.map((g) => g.rowCount)).toEqual([2, 1, 3]);
   });
 
@@ -172,9 +173,7 @@ describe('aggregates', () => {
         ],
       },
     );
-    const input = groups.find(
-      (g) => g.label === 'Input',
-    ) as GroupNode<Product>;
+    const input = groups.find((g) => g.label === 'Input') as GroupNode<Product>;
     expect(input.aggregates.get('price.sum')).toBe(165);
     expect(input.aggregates.get('price.average')).toBe(55);
     expect(input.aggregates.get('price.min')).toBe(25);
@@ -300,9 +299,7 @@ describe('flattening and expansion', () => {
     const expansion = new GroupExpansionState();
     expansion.setExpanded(groupPathSegment('category', 'Compute'), false);
     const again = flattenGroups(twoLevels(), expansion);
-    const compute = again
-      .filter(isGroupRow)
-      .find((r) => r.label === 'Compute');
+    const compute = again.filter(isGroupRow).find((r) => r.label === 'Compute');
     expect(compute?.expanded).toBe(false);
   });
 

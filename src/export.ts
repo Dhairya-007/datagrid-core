@@ -191,10 +191,7 @@ export class CsvExporter<T> {
   }
 
   /** Exports whichever shape `result` carries. */
-  exportResult(
-    result: GridResult<T>,
-    expansion: GroupExpansionState,
-  ): string {
+  exportResult(result: GridResult<T>, expansion: GroupExpansionState): string {
     return result.isGrouped
       ? this.exportGroups(result.groups, expansion)
       : this.exportRows(result.rows);

@@ -13,8 +13,7 @@ export const SelectionMode = {
   /** Rectangular cell ranges, as a spreadsheet does. */
   cellRange: 'cellRange',
 } as const;
-export type SelectionMode =
-  (typeof SelectionMode)[keyof typeof SelectionMode];
+export type SelectionMode = (typeof SelectionMode)[keyof typeof SelectionMode];
 
 /**
  * Modifier keys in effect when a selection gesture happened.
@@ -497,10 +496,7 @@ export class SelectionState {
    * them are not the cells that were between them before; following the
    * anchor and the focus is the only rule that keeps a rectangle a rectangle.
    */
-  remapRows(
-    moved: (index: number) => number | null,
-    rowCount: number,
-  ): void {
+  remapRows(moved: (index: number) => number | null, rowCount: number): void {
     this.changed();
     const next = new Set<number>();
     for (const index of this.rowSet) {

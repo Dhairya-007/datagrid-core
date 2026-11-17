@@ -4,11 +4,7 @@
  * @module
  */
 
-import {
-  AggregateResult,
-  computeAggregates,
-  type Aggregation,
-} from './aggregate';
+import { AggregateResult, computeAggregates } from './aggregate';
 import { ColumnType, type GridColumn } from './column';
 import { compareValues, foldText, type CellValue } from './compare';
 import { ColumnStats, computeColumnStats } from './decoration';
@@ -771,7 +767,10 @@ export class InMemoryDataSource<T> extends GridDataSource<T> {
    */
   sourceIndexOf(row: T): number {
     let positions = this.positions;
-    if (positions === null || this.positionGeneration !== this.matchedGeneration) {
+    if (
+      positions === null ||
+      this.positionGeneration !== this.matchedGeneration
+    ) {
       positions = new Map<T, number>();
       for (let i = 0; i < this.matchedIndices.length; i++) {
         positions.set(
@@ -861,7 +860,10 @@ export class InMemoryDataSource<T> extends GridDataSource<T> {
       // walking a filter tree.
       if (index !== null && !(index[i] as string).includes(needle)) continue;
       const row = this.data[i] as T;
-      if (compiled !== null && !compiled.test((f) => columns.get(f)?.value(row))) {
+      if (
+        compiled !== null &&
+        !compiled.test((f) => columns.get(f)?.value(row))
+      ) {
         continue;
       }
       indices.push(i);
@@ -1000,7 +1002,10 @@ export class InMemoryDataSource<T> extends GridDataSource<T> {
     for (let i = 0; i < this.data.length; i++) {
       if (index !== null && !(index[i] as string).includes(needle)) continue;
       const row = this.data[i] as T;
-      if (compiled !== null && !compiled.test((f) => columns.get(f)?.value(row))) {
+      if (
+        compiled !== null &&
+        !compiled.test((f) => columns.get(f)?.value(row))
+      ) {
         continue;
       }
       out.push(row);
@@ -1117,8 +1122,10 @@ export class InMemoryDataSource<T> extends GridDataSource<T> {
       return this.aggregateResult;
     }
     const columns = this.columns;
-    const result = computeAggregates<T>(ordered, query.aggregations, (row, field) =>
-      columns.get(field)?.value(row),
+    const result = computeAggregates<T>(
+      ordered,
+      query.aggregations,
+      (row, field) => columns.get(field)?.value(row),
     );
     this.aggregateRevision = this.revision;
     this.aggregateKey = key;
@@ -1181,10 +1188,7 @@ export class InMemoryDataSource<T> extends GridDataSource<T> {
     const needle = query.needle;
     if (needle.length > 0) {
       // The search index has to be in hand and cover the same fields.
-      if (
-        this.indexRevision !== before ||
-        this.indexKey !== fields.join(',')
-      ) {
+      if (this.indexRevision !== before || this.indexKey !== fields.join(',')) {
         return false;
       }
       if (this.searchIndex.length !== this.data.length) return false;
@@ -1270,7 +1274,13 @@ export class InMemoryDataSource<T> extends GridDataSource<T> {
     }
     if (matches) {
       const comparator = buildComparator<T>(query.sorts, this.columns);
-      const insertAt = insertionInOrder(rows, indices, updated, index, comparator);
+      const insertAt = insertionInOrder(
+        rows,
+        indices,
+        updated,
+        index,
+        comparator,
+      );
       rows.splice(insertAt, 0, updated);
       indices.splice(insertAt, 0, index);
     }
@@ -1369,9 +1379,7 @@ function rangeOf(count: number): number[] {
  */
 export class AsyncDataSource<T> extends GridDataSource<T> {
   private readonly fetcher: (query: GridQuery) => Promise<GridResult<T>>;
-  private readonly committer:
-    | ((original: T, updated: T) => Promise<T>)
-    | null;
+  private readonly committer: ((original: T, updated: T) => Promise<T>) | null;
 
   constructor(
     fetcher: (query: GridQuery) => Promise<GridResult<T>>,

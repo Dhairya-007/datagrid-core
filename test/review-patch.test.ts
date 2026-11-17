@@ -185,7 +185,11 @@ describe('a batch write', () => {
       expect(
         patched.rows.map((row) => row.id),
         `after batch ${batch}`,
-      ).toEqual(fresh(source.rows).fetchSync(query).rows.map((row) => row.id));
+      ).toEqual(
+        fresh(source.rows)
+          .fetchSync(query)
+          .rows.map((row) => row.id),
+      );
     }
   });
 });
@@ -251,9 +255,7 @@ describe('an edit patched into a cached pipeline', () => {
       expect(patched.aggregates.asObject).toEqual(
         control.fetchSync(query).aggregates.asObject,
       );
-      expect(source.statsFor('score').max).toBe(
-        control.statsFor('score').max,
-      );
+      expect(source.statsFor('score').max).toBe(control.statsFor('score').max);
     }
   });
 

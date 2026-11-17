@@ -10,7 +10,12 @@ import {
   GridQuery,
   GridResult,
 } from '../src/index';
-import { Product, productColumns, productGrid, sampleProducts } from './fixtures';
+import {
+  Product,
+  productColumns,
+  productGrid,
+  sampleProducts,
+} from './fixtures';
 
 const wait = (ms: number): Promise<void> =>
   new Promise((resolve) => setTimeout(resolve, ms));
@@ -232,9 +237,10 @@ describe('debounce', () => {
 });
 
 describe('keepRowsOnError', () => {
-  function failingGrid(
-    options: { keepRowsOnError?: boolean } = {},
-  ): { grid: GridController<Product>; fail: (on: boolean) => void } {
+  function failingGrid(options: { keepRowsOnError?: boolean } = {}): {
+    grid: GridController<Product>;
+    fail: (on: boolean) => void;
+  } {
     let failing = false;
     const grid = new GridController<Product>({
       columns: productColumns(),

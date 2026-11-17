@@ -154,7 +154,9 @@ describe('ThresholdRule', () => {
   });
 
   it('never fires on null', () => {
-    expect(new ThresholdRule({ threshold: 0 }).decorate(null, stats)).toBeNull();
+    expect(
+      new ThresholdRule({ threshold: 0 }).decorate(null, stats),
+    ).toBeNull();
   });
 });
 
@@ -237,7 +239,7 @@ describe('through the controller', () => {
       dataSource: new InMemoryDataSource<Product>(sampleProducts()),
     });
   }
-  type GridColumnOf = (ReturnType<typeof productColumns>)[number];
+  type GridColumnOf = ReturnType<typeof productColumns>[number];
 
   it('covers the matched rows with its stats', () => {
     const grid = gridWithRules();
@@ -282,12 +284,12 @@ describe('through the controller', () => {
 
   it('reads discrete values with a tone rule', () => {
     const grid = gridWithRules();
-    expect(
-      grid.decorationFor('category', grid.dataAt(3) as Product).tone,
-    ).toBe(CellTone.severe);
-    expect(
-      grid.decorationFor('category', grid.dataAt(0) as Product).tone,
-    ).toBe(CellTone.neutral);
+    expect(grid.decorationFor('category', grid.dataAt(3) as Product).tone).toBe(
+      CellTone.severe,
+    );
+    expect(grid.decorationFor('category', grid.dataAt(0) as Product).tone).toBe(
+      CellTone.neutral,
+    );
   });
 
   it('decorates nothing for an unknown field rather than throwing', () => {

@@ -68,9 +68,9 @@ describe('CsvExporter', () => {
     columns[1] = (columns[1] as (typeof columns)[0]).copyWith({
       visible: false,
     });
-    expect(lines(new CsvExporter(columns).exportRows(sampleProducts()))[0]).toBe(
-      'Name,Price,Stock,Active',
-    );
+    expect(
+      lines(new CsvExporter(columns).exportRows(sampleProducts()))[0],
+    ).toBe('Name,Price,Stock,Active');
   });
 
   it('writes an empty cell for a null value', () => {
@@ -102,9 +102,7 @@ describe('RFC 4180 quoting', () => {
     const csv = new CsvExporter(
       [new GridColumn<Product>({ field: 'name', value: (p) => p.name })],
       { includeHeader: false, delimiter },
-    ).exportRows([
-      new Product({ id: 1, name, category: 'x', price: 0 }),
-    ]);
+    ).exportRows([new Product({ id: 1, name, category: 'x', price: 0 })]);
     return csv.trimEnd();
   }
 
@@ -306,9 +304,9 @@ describe('formula injection', () => {
 
   it('sanitises clipboard text too', () => {
     expect(toClipboardText([['=1+1', 'safe']])).toBe("'=1+1\tsafe");
-    expect(
-      toClipboardText([['=1+1']], { sanitizeFormulas: false }),
-    ).toBe('=1+1');
+    expect(toClipboardText([['=1+1']], { sanitizeFormulas: false })).toBe(
+      '=1+1',
+    );
   });
 });
 

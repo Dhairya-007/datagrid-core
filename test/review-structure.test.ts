@@ -306,14 +306,8 @@ describe('a saved view that is partly unreadable', () => {
     const warnings: string[] = [];
     const state = GridViewState.fromJSON(
       {
-        sorts: [
-          { field: 'name', dir: 'ascending' },
-          { dir: 'descending' },
-        ],
-        columns: [
-          { field: 'name', width: 120 },
-          { width: 80 },
-        ],
+        sorts: [{ field: 'name', dir: 'ascending' }, { dir: 'descending' }],
+        columns: [{ field: 'name', width: 120 }, { width: 80 }],
       },
       warnings,
     );

@@ -216,7 +216,9 @@ export function describeHeaderProblems<T>(
     const seen = new Map<string, string>();
     for (const band of (rows[i] as HeaderRow).bands) {
       if (band.fields.length === 0) {
-        problems.push(`Header row ${i}: band "${band.title}" spans no columns.`);
+        problems.push(
+          `Header row ${i}: band "${band.title}" spans no columns.`,
+        );
       }
       for (const field of band.fields) {
         if (!known.has(field)) {

@@ -10,7 +10,13 @@ import {
   SortSpec,
   togglingModifier,
 } from '../src/index';
-import { labelsOf, Product, productColumns, productGrid, sampleProducts } from './fixtures';
+import {
+  labelsOf,
+  Product,
+  productColumns,
+  productGrid,
+  sampleProducts,
+} from './fixtures';
 
 describe('without a row key', () => {
   it('follows the position, which is all a selection can do', () => {
@@ -33,7 +39,9 @@ describe('with a row key', () => {
     expect(grid.selectedData[0]?.name).toBe('Mouse');
     grid.setSorts([new SortSpec('name')]);
     expect(grid.selectedData[0]?.name).toBe('Mouse');
-    expect(grid.selection.selectedRows[0]).toBe(labelsOf(grid).indexOf('Mouse'));
+    expect(grid.selection.selectedRows[0]).toBe(
+      labelsOf(grid).indexOf('Mouse'),
+    );
   });
 
   it('follows all of the rows of a multi-row selection', () => {

@@ -20,7 +20,13 @@ import {
   type CellValue,
   type JsonMap,
 } from '../src/index';
-import { labelsOf, Product, productColumns, productGrid, sampleProducts } from './fixtures';
+import {
+  labelsOf,
+  Product,
+  productColumns,
+  productGrid,
+  sampleProducts,
+} from './fixtures';
 
 /** Round-trips a view through text, the way an app's storage would. */
 function throughJson(state: GridViewState): GridViewState {
@@ -112,7 +118,10 @@ describe('a saved view', () => {
     const state = throughJson(grid.saveState());
     expect(state.groups).toHaveLength(1);
     expect(state.groups[0]?.field).toBe('price');
-    expect(state.groups[0]?.keyOf, 'a function cannot be serialised').toBeNull();
+    expect(
+      state.groups[0]?.keyOf,
+      'a function cannot be serialised',
+    ).toBeNull();
 
     const restored = productGrid();
     restored.restoreState(state, {

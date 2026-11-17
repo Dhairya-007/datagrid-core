@@ -24,16 +24,14 @@ export const SortDirection = {
   ascending: 'ascending',
   descending: 'descending',
 } as const;
-export type SortDirection =
-  (typeof SortDirection)[keyof typeof SortDirection];
+export type SortDirection = (typeof SortDirection)[keyof typeof SortDirection];
 
 /** Where nulls land relative to real values. */
 export const NullsPosition = {
   first: 'first',
   last: 'last',
 } as const;
-export type NullsPosition =
-  (typeof NullsPosition)[keyof typeof NullsPosition];
+export type NullsPosition = (typeof NullsPosition)[keyof typeof NullsPosition];
 
 /** Options for a {@link SortSpec}. */
 export interface SortSpecOptions {
@@ -171,7 +169,9 @@ export function buildComparator<T>(
  * `z`. Every other type keeps the natural order of its values.
  */
 export function defaultCompareFor(type: ColumnType): Comparator<CellValue> {
-  return type === ColumnType.text ? compareValuesCaseInsensitive : compareValues;
+  return type === ColumnType.text
+    ? compareValuesCaseInsensitive
+    : compareValues;
 }
 
 /**
@@ -234,9 +234,7 @@ export function sortOrder<T>(
 
   const comparators = levelColumns.map((column) => column.comparator);
   const ascending = levels.map((level) => level.isAscending);
-  const nullsFirst = levels.map(
-    (level) => level.nulls === NullsPosition.first,
-  );
+  const nullsFirst = levels.map((level) => level.nulls === NullsPosition.first);
 
   // Two orderings cost more per comparison than they need to, and both can be
   // answered by a key computed once per row: a case- and accent-folded text
@@ -308,7 +306,10 @@ export function sortOrder<T>(
         const vb = keys[b];
         const nulls = nullOrder(va, vb);
         if (nulls !== null) return nulls === 0 ? a - b : nulls;
-        let cmp = compareStrings(foldedOnly[a] as string, foldedOnly[b] as string);
+        let cmp = compareStrings(
+          foldedOnly[a] as string,
+          foldedOnly[b] as string,
+        );
         if (cmp === 0) cmp = compareStrings(va as string, vb as string);
         if (cmp !== 0) return ascendingOnly ? cmp : -cmp;
         return a - b;
@@ -370,7 +371,10 @@ export function sortOrder<T>(
       // indirect call per comparison per level cost half as much again as the
       // direct call over 50k rows and three levels.
       if (foldedLevel) {
-        cmp = compareStrings(foldedLevel[a] as string, foldedLevel[b] as string);
+        cmp = compareStrings(
+          foldedLevel[a] as string,
+          foldedLevel[b] as string,
+        );
         if (cmp === 0) cmp = compareStrings(va as string, vb as string);
       } else {
         const comparator = comparatorForLevel[level];
@@ -404,7 +408,11 @@ function identity(count: number): number[] {
  * the single-column case instead of `compareValues`, which re-tests the
  * operand types on every one of the O(n log n) comparisons.
  */
-function keyKind(keys: readonly CellValue[], base: number, count: number): number {
+function keyKind(
+  keys: readonly CellValue[],
+  base: number,
+  count: number,
+): number {
   let allNum = true;
   let allString = true;
   for (let i = 0; i < count; i++) {

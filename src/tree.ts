@@ -342,8 +342,12 @@ export function collectTreePaths<T>(options: {
     return out;
   }
   walk(
-    rootsOf<T>(rows, parentOf, keyOf, present, (row) =>
-      byParent.get(keyOf(row)) ?? [],
+    rootsOf<T>(
+      rows,
+      parentOf,
+      keyOf,
+      present,
+      (row) => byParent.get(keyOf(row)) ?? [],
     ),
   );
   return out;

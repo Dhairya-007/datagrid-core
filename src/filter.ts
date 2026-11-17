@@ -190,9 +190,7 @@ export abstract class Filter {
   /** Whether `row` (as a field -> value object) satisfies this filter. */
   matches(row: Record<string, CellValue> | Map<string, CellValue>): boolean {
     const read: FieldReader =
-      row instanceof Map
-        ? (field) => row.get(field)
-        : (field) => row[field];
+      row instanceof Map ? (field) => row.get(field) : (field) => row[field];
     return this.matchesRow(read);
   }
 
@@ -375,7 +373,9 @@ export class FilterCondition extends Filter {
         const ordered = this.compare(this.value, this.secondValue) <= 0;
         const low = ordered ? this.value : this.secondValue;
         const high = ordered ? this.secondValue : this.value;
-        return this.compare(actual, low) >= 0 && this.compare(actual, high) <= 0;
+        return (
+          this.compare(actual, low) >= 0 && this.compare(actual, high) <= 0
+        );
       }
       case FilterOperator.isIn: {
         const values = this.value;
@@ -411,9 +411,7 @@ export class FilterCondition extends Filter {
     if (this.dateOnly && (a instanceof Date || b instanceof Date)) {
       return compareValues(truncateDay(a), truncateDay(b));
     }
-    return this.caseSensitive
-      ? compareValues(a, b)
-      : compareValuesFolded(a, b);
+    return this.caseSensitive ? compareValues(a, b) : compareValuesFolded(a, b);
   }
 
   private text(value: CellValue): string {
@@ -539,7 +537,9 @@ function scalarsEqual(a: CellValue, b: CellValue): boolean {
 }
 
 /** Whether a value is a list of operands rather than a single one. */
-function isValueList(value: CellValue): value is readonly CellValue[] | Set<CellValue> {
+function isValueList(
+  value: CellValue,
+): value is readonly CellValue[] | Set<CellValue> {
   return Array.isArray(value) || value instanceof Set;
 }
 
@@ -626,7 +626,11 @@ export class FilterGroup extends Filter {
     const children: Filter[] = [];
     if (Array.isArray(raw)) {
       for (const child of raw) {
-        if (typeof child !== 'object' || child === null || Array.isArray(child)) {
+        if (
+          typeof child !== 'object' ||
+          child === null ||
+          Array.isArray(child)
+        ) {
           warnings?.push('A filter child that is not an object was skipped.');
           continue;
         }

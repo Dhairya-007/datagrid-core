@@ -5,11 +5,7 @@
  */
 
 import { AggregateResult, type Aggregation } from './aggregate';
-import {
-  ColumnPin,
-  type ColumnType,
-  type GridColumn,
-} from './column';
+import { ColumnPin, type GridColumn } from './column';
 import type { CellValue } from './compare';
 import {
   AsyncDataSource,
@@ -36,38 +32,23 @@ import {
   type FilterCondition,
   type FilterOperator,
 } from './filter';
-import {
-  GroupSpec,
-  pathKeySegment,
-  type GroupNode,
-} from './group';
-import {
-  CellEdit,
-  EditAction,
-  EditHistory,
-  ReplayOutcome,
-} from './history';
+import { GroupSpec, pathKeySegment, type GroupNode } from './group';
+import { CellEdit, EditAction, EditHistory, ReplayOutcome } from './history';
 import {
   ColumnFit,
   computeLayout,
   orderColumnsForDisplay,
   type GridLayout,
 } from './layout';
-import {
-  GridChange,
-  GridChangeNotifier,
-  type GridListener,
-} from './notifier';
+import { GridChange, GridChangeNotifier, type GridListener } from './notifier';
 import { PasteRejection, PasteResult } from './paste';
 import { GridQuery, GridResult } from './query';
 import {
-  DataGridRow,
   DetailRowList,
   emptyRowList,
   flattenGroups,
   GroupExpansionState,
   GroupedRowList,
-  GroupGridRow,
   isDataRow,
   isGroupRow,
   LazyDataRowList,
@@ -85,11 +66,7 @@ import {
   SelectionState,
   type SelectionModifiers,
 } from './selection';
-import {
-  buildComparator,
-  cycleSort,
-  SortSpec,
-} from './sort';
+import { buildComparator, cycleSort, SortSpec } from './sort';
 import { describeHeaderProblems, type HeaderRow } from './stacked-header';
 import { flattenTree, type TreeSpec } from './tree';
 import { ColumnViewState, GridViewState } from './view-state';
@@ -665,7 +642,9 @@ export class GridController<T> extends GridChangeNotifier {
   setPageSize(size: number | null): void {
     if (this.pageSizeValue === size) return;
     const firstRow =
-      this.pageSizeValue === null ? 0 : this.pageIndexValue * this.pageSizeValue;
+      this.pageSizeValue === null
+        ? 0
+        : this.pageIndexValue * this.pageSizeValue;
     this.pageSizeValue = size;
     this.pageIndexValue =
       size === null || size <= 0 ? 0 : Math.floor(firstRow / size);
@@ -841,7 +820,12 @@ export class GridController<T> extends GridChangeNotifier {
    * twice in two frames asks once.
    */
   get canLoadMore(): boolean {
-    if (!this.isInfinite || this.isGrouped || this.loadingMore || this.exhausted) {
+    if (
+      !this.isInfinite ||
+      this.isGrouped ||
+      this.loadingMore ||
+      this.exhausted
+    ) {
       return false;
     }
     const capabilities = this.source.capabilities;
@@ -1076,7 +1060,11 @@ export class GridController<T> extends GridChangeNotifier {
   /** Contents of the groups fetched so far, keyed by `GroupNode.path`. */
   private readonly loadedGroups = new Map<
     string,
-    { rows: readonly T[]; groups: readonly GroupNode<T>[]; aggregates: AggregateResult | null }
+    {
+      rows: readonly T[];
+      groups: readonly GroupNode<T>[];
+      aggregates: AggregateResult | null;
+    }
   >();
 
   private readonly loadingGroups = new Set<string>();
@@ -1255,8 +1243,7 @@ export class GridController<T> extends GridChangeNotifier {
 
     if (hierarchy !== null && key !== null) {
       const flattened = flattenTree<T>({
-        rows:
-          substitute === null ? result.rows : result.rows.map(substitute),
+        rows: substitute === null ? result.rows : result.rows.map(substitute),
         spec: hierarchy,
         keyOf: key,
         expansion: this.treeExpansion,
@@ -1765,12 +1752,17 @@ export class GridController<T> extends GridChangeNotifier {
 
   setColumnVisible(field: string, visible: boolean): void {
     const index = this.columnList.findIndex((c) => c.field === field);
-    if (index < 0 || (this.columnList[index] as GridColumn<T>).visible === visible) {
+    if (
+      index < 0 ||
+      (this.columnList[index] as GridColumn<T>).visible === visible
+    ) {
       return;
     }
-    this.columnList[index] = (this.columnList[index] as GridColumn<T>).copyWith({
-      visible,
-    });
+    this.columnList[index] = (this.columnList[index] as GridColumn<T>).copyWith(
+      {
+        visible,
+      },
+    );
     this.columnsChanged();
     this.batch(() => {
       this.notifyListeners([GridChange.layout]);
@@ -1784,9 +1776,11 @@ export class GridController<T> extends GridChangeNotifier {
     if (index < 0 || (this.columnList[index] as GridColumn<T>).pin === pin) {
       return;
     }
-    this.columnList[index] = (this.columnList[index] as GridColumn<T>).copyWith({
-      pin,
-    });
+    this.columnList[index] = (this.columnList[index] as GridColumn<T>).copyWith(
+      {
+        pin,
+      },
+    );
     this.columnsChanged();
     this.notifyListeners([GridChange.layout]);
   }
@@ -2235,8 +2229,10 @@ export class GridController<T> extends GridChangeNotifier {
     const column = this.column(field);
     const rule = column?.rule ?? null;
     if (column === null || rule === null) return CellDecoration.none;
-    return rule.decorate(column.value(row), this.statsFor(field)) ??
-      CellDecoration.none;
+    return (
+      rule.decorate(column.value(row), this.statsFor(field)) ??
+      CellDecoration.none
+    );
   }
 
   // -- Editing --------------------------------------------------------------
@@ -2495,10 +2491,9 @@ export class GridController<T> extends GridChangeNotifier {
     const byField = this.columnsByField;
     for (let i = 0; i < writes.length && i < before.length; i++) {
       for (const [field, value] of before[i] as Map<string, CellValue>) {
-        byField.get(field)?.setValue?.(
-          (writes[i] as RowUpdate<T>).original,
-          value,
-        );
+        byField
+          .get(field)
+          ?.setValue?.((writes[i] as RowUpdate<T>).original, value);
       }
     }
   }
@@ -2657,7 +2652,8 @@ export class GridController<T> extends GridChangeNotifier {
 
   private updatesFor(patches: readonly RowPatch<T>[]): RowUpdate<T>[] {
     return patches.map(
-      (patch) => new RowUpdate<T>(patch.row, this.withValues(patch.row, patch.values)),
+      (patch) =>
+        new RowUpdate<T>(patch.row, this.withValues(patch.row, patch.values)),
     );
   }
 
@@ -3127,7 +3123,8 @@ function requireValidHeaders<T>(
 
 /** Whether two cell values are the same, with dates compared by instant. */
 function sameCellValue(a: CellValue, b: CellValue): boolean {
-  if (a instanceof Date && b instanceof Date) return a.getTime() === b.getTime();
+  if (a instanceof Date && b instanceof Date)
+    return a.getTime() === b.getTime();
   return a === b;
 }
 

@@ -62,10 +62,7 @@ function layoutOf(
 describe('spans', () => {
   it('covers the width of the columns a band names', () => {
     const segments = layoutOf(identity);
-    expect(segments.map((s) => s.band?.title)).toEqual([
-      'Identity',
-      'Numbers',
-    ]);
+    expect(segments.map((s) => s.band?.title)).toEqual(['Identity', 'Numbers']);
     expect(segments[0]?.offset).toBe(0);
     expect(segments[0]?.width).toBe(200);
     expect(segments[segments.length - 1]?.offset).toBe(200);

@@ -20,7 +20,12 @@ import {
   SortSpec,
   type CellValue,
 } from '../src/index';
-import { productColumns, productGrid, Product, sampleProducts } from './fixtures';
+import {
+  productColumns,
+  productGrid,
+  Product,
+  sampleProducts,
+} from './fixtures';
 
 /**
  * A synchronous source that is not InMemoryDataSource, which is what the
@@ -149,7 +154,9 @@ describe('cache keys come from each spec', () => {
 
   it('makes aggregations part of the group identity', () => {
     const plain = new GridQuery({ groups: [new GroupSpec('category')] });
-    const withSum = plain.copyWith({ aggregations: [Aggregation.sum('price')] });
+    const withSum = plain.copyWith({
+      aggregations: [Aggregation.sum('price')],
+    });
     expect(withSum.groupFingerprint).not.toBe(plain.groupFingerprint);
   });
 });
@@ -270,9 +277,7 @@ describe('what changed', () => {
       grid.selectRow(1);
     });
     expect(seen).toHaveLength(1);
-    expect(seen[0]).toEqual(
-      new Set([GridChange.layout, GridChange.selection]),
-    );
+    expect(seen[0]).toEqual(new Set([GridChange.layout, GridChange.selection]));
   });
 
   it('lets a plain listener read what the notification was about', () => {

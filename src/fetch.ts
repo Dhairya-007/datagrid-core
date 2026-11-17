@@ -67,7 +67,8 @@ export class FetchSignal {
   get abortSignal(): AbortSignal {
     if (this.controller === null) {
       this.controller = new AbortController();
-      if (this.cancelled) this.controller.abort(new FetchCancelled(this.reasonValue));
+      if (this.cancelled)
+        this.controller.abort(new FetchCancelled(this.reasonValue));
     }
     return this.controller.signal;
   }

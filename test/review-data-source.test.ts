@@ -155,9 +155,18 @@ describe('case-insensitive filters', () => {
       secondValue: 2,
     });
     for (const condition of [forwards, backwards]) {
-      expect(condition.matchesRow(() => 2), String(condition)).toBe(true);
-      expect(condition.matchesRow(() => 8), String(condition)).toBe(true);
-      expect(condition.matchesRow(() => 9), String(condition)).toBe(false);
+      expect(
+        condition.matchesRow(() => 2),
+        String(condition),
+      ).toBe(true);
+      expect(
+        condition.matchesRow(() => 8),
+        String(condition),
+      ).toBe(true);
+      expect(
+        condition.matchesRow(() => 9),
+        String(condition),
+      ).toBe(false);
     }
   });
 

@@ -191,7 +191,8 @@ describe('a nested model', () => {
     });
     const names: string[] = [];
     for (const row of grid.visibleRows) {
-      if (isDataRow(row)) names.push(`${'  '.repeat(row.depth)}${row.data.name}`);
+      if (isDataRow(row))
+        names.push(`${'  '.repeat(row.depth)}${row.data.name}`);
     }
     expect(names).toEqual([
       'Assembly',

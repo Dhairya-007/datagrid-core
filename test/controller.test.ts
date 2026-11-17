@@ -18,7 +18,13 @@ import {
   togglingModifier,
   type GroupGridRow,
 } from '../src/index';
-import { labelsOf, Product, productColumns, productGrid, sampleProducts } from './fixtures';
+import {
+  labelsOf,
+  Product,
+  productColumns,
+  productGrid,
+  sampleProducts,
+} from './fixtures';
 
 /** A promise whose resolution the test controls, as Dart's Completer is. */
 function completer<V>(): {

@@ -221,7 +221,8 @@ export class GroupKey {
 }
 
 function sameKey(a: CellValue, b: CellValue): boolean {
-  if (a instanceof Date && b instanceof Date) return a.getTime() === b.getTime();
+  if (a instanceof Date && b instanceof Date)
+    return a.getTime() === b.getTime();
   return a === b;
 }
 
@@ -392,7 +393,7 @@ export class GroupNode<T> {
 }
 
 /** Options for {@link buildGroups}. */
-export interface BuildGroupsOptions<T> {
+export interface BuildGroupsOptions {
   aggregations?: readonly Aggregation[];
   depth?: number;
   parentPath?: string;
@@ -409,7 +410,7 @@ export function buildGroups<T>(
   rows: readonly T[],
   groups: readonly GroupSpec[],
   columns: ReadonlyMap<string, GridColumn<T>>,
-  options: BuildGroupsOptions<T> = {},
+  options: BuildGroupsOptions = {},
 ): GroupNode<T>[] {
   const {
     aggregations = [],
@@ -424,7 +425,10 @@ export function buildGroups<T>(
   // Buckets are keyed by a tagged string rather than by the key itself: a
   // JavaScript Map compares object keys by identity, so grouping by a date
   // column put every row in a bucket of its own.
-  const buckets = new Map<string, { key: CellValue; label: string; rows: T[] }>();
+  const buckets = new Map<
+    string,
+    { key: CellValue; label: string; rows: T[] }
+  >();
   for (const row of rows) {
     const raw = column === undefined ? null : column.value(row);
     const key = spec.keyFor(raw);
@@ -464,7 +468,8 @@ export function buildGroups<T>(
   const rest = groups.slice(1);
   return ordered.map((bucket) => {
     const segment = groupPathSegment(spec.field, bucket.key);
-    const path = parentPath.length === 0 ? segment : `${parentPath}\u001f${segment}`;
+    const path =
+      parentPath.length === 0 ? segment : `${parentPath}\u001f${segment}`;
     const keys = [...parentKeys, new GroupKey(spec.field, bucket.key)];
     const children = buildGroups<T>(bucket.rows, rest, columns, {
       aggregations,
@@ -481,8 +486,10 @@ export function buildGroups<T>(
       keys,
       children,
       rows: children.length === 0 ? bucket.rows : [],
-      aggregates: computeAggregates<T>(bucket.rows, aggregations, (row, field) =>
-        columns.get(field)?.value(row),
+      aggregates: computeAggregates<T>(
+        bucket.rows,
+        aggregations,
+        (row, field) => columns.get(field)?.value(row),
       ),
     });
   });

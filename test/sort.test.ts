@@ -195,11 +195,7 @@ describe('default text ordering', () => {
     ];
     const byField = columnsOf(new GridColumn<Row>({ field: 'name' }));
     const sorted = sortRows(rows, [new SortSpec('name')], byField);
-    expect(sorted.map((r) => r['name'])).toEqual([
-      'apple',
-      'banana',
-      'Cherry',
-    ]);
+    expect(sorted.map((r) => r['name'])).toEqual(['apple', 'banana', 'Cherry']);
   });
 
   it('keeps two spellings of one word in a stable order', () => {

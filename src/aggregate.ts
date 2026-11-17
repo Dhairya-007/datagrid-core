@@ -21,8 +21,7 @@ export const AggregateType = {
   last: 'last',
   custom: 'custom',
 } as const;
-export type AggregateType =
-  (typeof AggregateType)[keyof typeof AggregateType];
+export type AggregateType = (typeof AggregateType)[keyof typeof AggregateType];
 
 /** A reducer for {@link AggregateType.custom}. */
 export type AggregateReducer = (values: CellValue[]) => CellValue;
@@ -189,9 +188,7 @@ export class Aggregation {
       case AggregateType.first:
         return values.length === 0 ? null : (values[0] ?? null);
       case AggregateType.last:
-        return values.length === 0
-          ? null
-          : (values[values.length - 1] ?? null);
+        return values.length === 0 ? null : (values[values.length - 1] ?? null);
       case AggregateType.custom:
         return (this.compute as AggregateReducer)(values);
     }

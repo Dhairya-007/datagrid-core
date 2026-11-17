@@ -73,9 +73,7 @@ export class ColumnViewState {
       width: typeof width === 'number' ? width : null,
       visible: json['visible'] !== false,
       pin:
-        pin === ColumnPin.start || pin === ColumnPin.end
-          ? pin
-          : ColumnPin.none,
+        pin === ColumnPin.start || pin === ColumnPin.end ? pin : ColumnPin.none,
     });
   }
 
@@ -233,7 +231,11 @@ export class GridViewState {
       if (!Array.isArray(raw)) return [];
       const out: R[] = [];
       for (const entry of raw) {
-        if (typeof entry !== 'object' || entry === null || Array.isArray(entry)) {
+        if (
+          typeof entry !== 'object' ||
+          entry === null ||
+          Array.isArray(entry)
+        ) {
           warnings?.push(`A ${what} that is not an object was skipped.`);
           continue;
         }
@@ -263,9 +265,17 @@ export class GridViewState {
 
     const filters = json['columnFilters'];
     const columnFilters = new Map<string, FilterCondition>();
-    if (typeof filters === 'object' && filters !== null && !Array.isArray(filters)) {
+    if (
+      typeof filters === 'object' &&
+      filters !== null &&
+      !Array.isArray(filters)
+    ) {
       for (const [field, value] of Object.entries(filters as JsonMap)) {
-        if (typeof value !== 'object' || value === null || Array.isArray(value)) {
+        if (
+          typeof value !== 'object' ||
+          value === null ||
+          Array.isArray(value)
+        ) {
           warnings?.push(`The filter on ${field} was dropped.`);
           continue;
         }
@@ -285,7 +295,9 @@ export class GridViewState {
     const fit = json['fit'];
 
     return new GridViewState({
-      sorts: readList(json['sorts'], 'sort', (entry) => SortSpec.fromJSON(entry)),
+      sorts: readList(json['sorts'], 'sort', (entry) =>
+        SortSpec.fromJSON(entry),
+      ),
       filter: readFilter(json['filter'], 'filter'),
       columnFilters,
       search: typeof search === 'string' ? search : '',

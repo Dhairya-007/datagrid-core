@@ -73,7 +73,9 @@ class Arrangement {
     for (let i = 0; i < sortCount; i++) {
       this.sorts.push(
         new SortSpec(shuffled[i] as string, {
-          direction: bool() ? SortDirection.ascending : SortDirection.descending,
+          direction: bool()
+            ? SortDirection.ascending
+            : SortDirection.descending,
           nulls: bool() ? NullsPosition.first : NullsPosition.last,
         }),
       );
@@ -245,9 +247,7 @@ describe('every arrangement', () => {
     for (const arrangement of arrangements) {
       const grid = arrangement.build();
       // Taken from the layout for the same reason the export invariant is.
-      const fields = grid
-        .layoutFor(1800)
-        .allColumns.map((c) => c.column.field);
+      const fields = grid.layoutFor(1800).allColumns.map((c) => c.column.field);
       if (fields.length === 0 || grid.rowCount === 0) continue;
       grid.selectCell(new CellAddress(0, fields[0] as string));
       for (let i = 1; i < fields.length; i++) {

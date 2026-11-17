@@ -22,7 +22,12 @@ import {
   SortSpec,
   TreeSpec,
 } from '../src/advanced';
-import { Product, productColumns, productGrid, sampleProducts } from './fixtures';
+import {
+  Product,
+  productColumns,
+  productGrid,
+  sampleProducts,
+} from './fixtures';
 
 const tick = (): Promise<void> =>
   new Promise((resolve) => setTimeout(resolve, 0));

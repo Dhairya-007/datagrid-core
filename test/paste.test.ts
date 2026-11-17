@@ -45,7 +45,9 @@ class CountingSource extends InMemoryDataSource<Product> {
     super(rows);
   }
 
-  override commitAll(writes: readonly RowUpdate<Product>[]): Promise<Product[]> {
+  override commitAll(
+    writes: readonly RowUpdate<Product>[],
+  ): Promise<Product[]> {
     this.onWrite();
     return super.commitAll(writes);
   }

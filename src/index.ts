@@ -50,10 +50,7 @@ export {
   type Comparator,
 } from './compare';
 
-export {
-  GridController,
-  type GridControllerOptions,
-} from './controller';
+export { GridController, type GridControllerOptions } from './controller';
 
 export {
   AsyncDataSource,
@@ -148,12 +145,7 @@ export {
   type GroupSpecOptions,
 } from './group';
 
-export {
-  CellEdit,
-  EditAction,
-  EditHistory,
-  ReplayOutcome,
-} from './history';
+export { CellEdit, EditAction, EditHistory, ReplayOutcome } from './history';
 
 export {
   ColumnFit,

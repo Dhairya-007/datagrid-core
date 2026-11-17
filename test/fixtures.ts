@@ -83,9 +83,27 @@ export function productColumns(): GridColumn<Product>[] {
 
 export function sampleProducts(): Product[] {
   return [
-    new Product({ id: 1, name: 'Keyboard', category: 'Input', price: 80, stock: 12 }),
-    new Product({ id: 2, name: 'Mouse', category: 'Input', price: 25, stock: 40 }),
-    new Product({ id: 3, name: 'Monitor', category: 'Display', price: 320, stock: 5 }),
+    new Product({
+      id: 1,
+      name: 'Keyboard',
+      category: 'Input',
+      price: 80,
+      stock: 12,
+    }),
+    new Product({
+      id: 2,
+      name: 'Mouse',
+      category: 'Input',
+      price: 25,
+      stock: 40,
+    }),
+    new Product({
+      id: 3,
+      name: 'Monitor',
+      category: 'Display',
+      price: 320,
+      stock: 5,
+    }),
     new Product({ id: 4, name: 'Laptop', category: 'Compute', price: 1450 }),
     new Product({
       id: 5,
@@ -95,7 +113,13 @@ export function sampleProducts(): Product[] {
       stock: 7,
       active: false,
     }),
-    new Product({ id: 6, name: 'Webcam', category: 'Input', price: 60, stock: 0 }),
+    new Product({
+      id: 6,
+      name: 'Webcam',
+      category: 'Input',
+      price: 60,
+      stock: 0,
+    }),
   ];
 }
 

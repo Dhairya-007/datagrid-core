@@ -17,7 +17,12 @@ import {
   SortSpec,
   type CellValue,
 } from '../src/index';
-import { Product, productColumnMap, productGrid, sampleProducts } from './fixtures';
+import {
+  Product,
+  productColumnMap,
+  productGrid,
+  sampleProducts,
+} from './fixtures';
 
 function source(rows?: Product[]): InMemoryDataSource<Product> {
   const data = new InMemoryDataSource<Product>(rows ?? sampleProducts());
@@ -126,9 +131,9 @@ describe('stale results after a mutation', () => {
     );
     data.columns = relabelled;
     expect(data.fetchSync(query).rows).toEqual([]);
-    expect(
-      data.fetchSync(new GridQuery({ search: 'eur' })).rows,
-    ).toHaveLength(6);
+    expect(data.fetchSync(new GridQuery({ search: 'eur' })).rows).toHaveLength(
+      6,
+    );
   });
 
   it('empties a cached query when the rows are cleared', () => {
@@ -287,9 +292,9 @@ describe('incremental search', () => {
 
   it('widens the result again when backspacing', () => {
     const data = source();
-    expect(
-      data.fetchSync(new GridQuery({ search: 'keyb' })).rows,
-    ).toHaveLength(1);
+    expect(data.fetchSync(new GridQuery({ search: 'keyb' })).rows).toHaveLength(
+      1,
+    );
     expect(data.fetchSync(new GridQuery({ search: 'key' })).rows).toHaveLength(
       1,
     );

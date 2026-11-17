@@ -61,7 +61,12 @@ export class CellDecoration {
   readonly bold: boolean;
 
   constructor(options: CellDecorationOptions = {}) {
-    const { tone = CellTone.neutral, intensity = 1, bar, bold = false } = options;
+    const {
+      tone = CellTone.neutral,
+      intensity = 1,
+      bar,
+      bold = false,
+    } = options;
     this.tone = tone;
     this.intensity = intensity;
     this.bar = bar ?? null;
@@ -401,7 +406,11 @@ export class ValueToneRule implements CellRule {
   decorate(value: CellValue, _stats: ColumnStats): CellDecoration | null {
     if (value === null || value === undefined) return null;
     let tone = this.tones.get(value);
-    if (tone === undefined && !this.caseSensitive && typeof value === 'string') {
+    if (
+      tone === undefined &&
+      !this.caseSensitive &&
+      typeof value === 'string'
+    ) {
       const lowered = value.toLowerCase();
       for (const [key, candidate] of this.tones) {
         if (typeof key === 'string' && key.toLowerCase() === lowered) {
