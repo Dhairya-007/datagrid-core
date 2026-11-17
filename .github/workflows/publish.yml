@@ -28,7 +28,22 @@ jobs:
       - run: npm ci
       - run: npm run verify
 
+      # Skipped rather than failed when no token is configured, so tagging a
+      # release never paints the repository red for a missing secret.
+      - name: Check for a publish token
+        id: token
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          if [ -n "$NPM_TOKEN" ]; then
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::No NPM_TOKEN secret, so this tag was verified but not published."
+          fi
+
       - name: Publish to npm
+        if: steps.token.outputs.present == 'true'
         run: npm publish --provenance --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
