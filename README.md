@@ -37,7 +37,11 @@ import {
 
 const grid = new GridController<Employee>({
   columns: [
-    new GridColumn<Employee>({ field: 'name', value: (e) => e.name, pin: 'start' }),
+    new GridColumn<Employee>({
+      field: 'name',
+      value: (e) => e.name,
+      pin: 'start',
+    }),
     new GridColumn<Employee>({
       field: 'salary',
       type: 'number',
@@ -45,7 +49,10 @@ const grid = new GridController<Employee>({
       setValue: (e, v) => ({ ...e, salary: v as number }),
       validator: numberRange({ min: 0 }),
     }),
-    new GridColumn<Employee>({ field: 'department', value: (e) => e.department }),
+    new GridColumn<Employee>({
+      field: 'department',
+      value: (e) => e.department,
+    }),
   ],
   dataSource: new InMemoryDataSource(employees),
   aggregations: [Aggregation.sum('salary')],
@@ -56,11 +63,11 @@ grid.addListener(render);
 
 function render() {
   for (const row of grid.visibleRows) {
-    if (isDataRow(row)) draw(row.data);     // row.kind is 'data' | 'group' | 'detail'
+    if (isDataRow(row)) draw(row.data); // row.kind is 'data' | 'group' | 'detail'
   }
 }
 
-grid.toggleSort('salary');     // and the listener fires
+grid.toggleSort('salary'); // and the listener fires
 grid.groupBy('department');
 grid.setSearch('eng');
 ```
@@ -82,24 +89,24 @@ server.
 
 ## What you get
 
-|  |  |
-| --- | --- |
-| **Sorting** | multi-column, stable, custom comparators, explicit null placement, natural order |
-| **Filtering** | 16 operators, a serialisable condition tree, free-text search, a filter row |
-| **Grouping** | nested levels, derived keys, per-group aggregates, collapsible headers, server-side |
-| **Tree data** | parent/child rows, from a nested model or a parent reference, lazily loaded |
-| **Aggregates** | sum, average, min, max, count, distinct count, custom reducers |
-| **Frozen columns and rows** | leading and trailing panes, plus rows pinned to the top and bottom |
-| **Stacked headers** | header rows spanning several columns, following reorders and hidden columns |
-| **Column state** | sort, pin, hide, resize, auto-size, drag to reorder |
-| **Virtualization** | uniform and variable row heights, plus column windowing for wide grids |
-| **Selection** | rows, cells, rectangular ranges, a tri-state checkbox, keyboard navigation, TSV copy |
-| **Editing** | validated sessions, inline errors, optimistic writes, paste into a range, undo/redo |
-| **Paging** | local or server-driven, or infinite scrolling with `loadMore()` |
-| **Detail panels** | an expandable panel under a row, counted by virtualization like any other row |
-| **Export** | RFC 4180 CSV, grouped CSV, clipboard text — with formula injection neutralised |
-| **Saved views** | the whole arrangement — query, column order, widths, pins — as JSON |
-| **Conditional formatting** | data bars, colour scales, thresholds and value tones, decided in the engine |
+|                             |                                                                                      |
+| --------------------------- | ------------------------------------------------------------------------------------ |
+| **Sorting**                 | multi-column, stable, custom comparators, explicit null placement, natural order     |
+| **Filtering**               | 16 operators, a serialisable condition tree, free-text search, a filter row          |
+| **Grouping**                | nested levels, derived keys, per-group aggregates, collapsible headers, server-side  |
+| **Tree data**               | parent/child rows, from a nested model or a parent reference, lazily loaded          |
+| **Aggregates**              | sum, average, min, max, count, distinct count, custom reducers                       |
+| **Frozen columns and rows** | leading and trailing panes, plus rows pinned to the top and bottom                   |
+| **Stacked headers**         | header rows spanning several columns, following reorders and hidden columns          |
+| **Column state**            | sort, pin, hide, resize, auto-size, drag to reorder                                  |
+| **Virtualization**          | uniform and variable row heights, plus column windowing for wide grids               |
+| **Selection**               | rows, cells, rectangular ranges, a tri-state checkbox, keyboard navigation, TSV copy |
+| **Editing**                 | validated sessions, inline errors, optimistic writes, paste into a range, undo/redo  |
+| **Paging**                  | local or server-driven, or infinite scrolling with `loadMore()`                      |
+| **Detail panels**           | an expandable panel under a row, counted by virtualization like any other row        |
+| **Export**                  | RFC 4180 CSV, grouped CSV, clipboard text — with formula injection neutralised       |
+| **Saved views**             | the whole arrangement — query, column order, widths, pins — as JSON                  |
+| **Conditional formatting**  | data bars, colour scales, thresholds and value tones, decided in the engine          |
 
 ## The shape of it
 
@@ -126,14 +133,15 @@ point a grid at an endpoint in three lines.
 ### Rendering a frame
 
 ```ts
-const layout = grid.layoutFor(viewportWidth);     // frozen panes and widths
+const layout = grid.layoutFor(viewportWidth); // frozen panes and widths
 const metrics = RowMetrics.uniform({ rowCount: grid.rowCount, rowHeight: 36 });
 const window = metrics.windowFor({ scrollOffset, viewportExtent });
 
 for (let i = window.firstIndex; i <= window.lastIndex; i++) {
   const row = grid.visibleRows.at(i);
   if (isGroupRow(row)) drawHeader(row.label, row.rowCount, row.expanded);
-  else if (isDataRow(row)) drawRow(row.data, layout.visibleScrollingColumns({ scrollOffset: x }));
+  else if (isDataRow(row))
+    drawRow(row.data, layout.visibleScrollingColumns({ scrollOffset: x }));
 }
 ```
 
@@ -147,7 +155,7 @@ Use `.at(i)`, `.length`, `.slice(a, b)` and iteration.
 grid.addChangeListener((changes) => {
   if (changes.has('rows')) rebuildRows();
   if (changes.has('layout')) relayout();
-  if (changes.has('selection')) repaintSelection();   // no row content changed
+  if (changes.has('selection')) repaintSelection(); // no row content changed
 });
 ```
 
@@ -160,7 +168,7 @@ Only the engine knows which it was, so it says.
 const source = new AsyncDataSource<Row>(
   async (query) => {
     const res = await fetch(`/api/rows?${toParams(query)}`, {
-      signal: query.signal?.abortSignal,     // the grid cancels superseded fetches
+      signal: query.signal?.abortSignal, // the grid cancels superseded fetches
     });
     const { rows, total } = await res.json();
     return new GridResult({ rows, totalCount: total });
@@ -171,7 +179,7 @@ const source = new AsyncDataSource<Row>(
 const grid = new GridController({
   columns,
   dataSource: source,
-  fetchDebounceMs: 250,     // a typed word is one request
+  fetchDebounceMs: 250, // a typed word is one request
   rowKey: (r) => r.id,
 });
 ```
@@ -183,8 +191,8 @@ backend can translate it into SQL or query parameters.
 ## Two entry points
 
 ```ts
-import { GridController } from 'gridcore';            // what an application holds
-import { sortRows, buildGroups } from 'gridcore/advanced';   // the pipeline stages
+import { GridController } from 'gridcore'; // what an application holds
+import { sortRows, buildGroups } from 'gridcore/advanced'; // the pipeline stages
 ```
 
 The root is a promise: everything in it is something you can hold, and taking
@@ -200,17 +208,24 @@ ordered, then grouped — each keyed by the part of the query it depends on.
 Turning a page only re-slices; reversing a sort does not re-filter; editing
 one cell patches the result rather than rebuilding it.
 
-Up to around 20k rows every operation stays inside a frame on a desktop
-machine. Between there and 100k, sorting and a whole-table search cross it.
-Past 100k, prefer a source that pushes the work into a database — which is
-what `GridDataSource` is for.
+`npm run bench` measures the operations a user drives. On a 2024 MacBook
+Pro, from cold — the timing includes building the rows — a 10,000-row grid
+sorts one column in ~9 ms, searches the whole table in ~6 ms and groups with
+a subtotal in ~4 ms, so every one of them fits inside a 16.7 ms frame. At
+50,000 rows the same three take ~62 ms, ~42 ms and ~30 ms, which reads as a
+stall rather than a dropped frame.
+
+So: up to around 20k rows everything stays inside a frame. Between there and
+100k, sorting and a whole-table search cross it. Past 100k, prefer a source
+that pushes the work into a database — which is what `GridDataSource` is
+for.
 
 Some of the decisions that are load-bearing, in case you are reading the
 source:
 
 - Select-all is a flag with a set of exceptions, not a set of every index, so
   selecting a million rows is O(1) and so is every membership test.
-- A grouped row list holds an index over the *groups*, so opening one group
+- A grouped row list holds an index over the _groups_, so opening one group
   is O(groups) and touches no row.
 - Quick search runs against a folded text index built once per revision, not
   by formatting every cell per keystroke.
