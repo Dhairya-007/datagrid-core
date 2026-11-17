@@ -1,0 +1,75 @@
+{
+  "name": "gridcore",
+  "version": "0.1.0",
+  "description": "Headless data grid engine: multi-column sorting, filtering, search, grouping with aggregates, tree rows, virtualization, selection, cell editing and CSV export.",
+  "keywords": [
+    "datagrid",
+    "data-table",
+    "grid",
+    "table",
+    "headless",
+    "virtualization",
+    "spreadsheet",
+    "sorting",
+    "filtering",
+    "grouping"
+  ],
+  "license": "MIT",
+  "author": "Dhairya Oza",
+  "homepage": "https://github.com/Dhairya-007/gridcore#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Dhairya-007/gridcore.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Dhairya-007/gridcore/issues"
+  },
+  "type": "module",
+  "sideEffects": false,
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./advanced": {
+      "types": "./dist/advanced.d.ts",
+      "import": "./dist/advanced.js",
+      "require": "./dist/advanced.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "bench": "vitest bench --run",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "verify": "npm run typecheck && npm run lint && npm run format:check && npm run test && npm run build",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.2",
+    "eslint": "^9.17.0",
+    "prettier": "^3.4.2",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "typescript-eslint": "^8.18.1",
+    "vitest": "^2.1.8"
+  }
+}
